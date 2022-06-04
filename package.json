@@ -1,0 +1,22 @@
+{
+  "name": "memotest",
+  "version": "1.0.0",
+  "description": "Juego de memotest para rArgentinaPrograma",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/venutti/memotest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/venutti/memotest/issues"
+  },
+  "homepage": "https://github.com/venutti/memotest#readme",
+  "dependencies": {
+    "bootstrap": "^5.1.3"
+  }
+}
