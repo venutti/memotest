@@ -9,6 +9,7 @@ comenzarJuego();
 
 function comenzarJuego() {
     habilitarSeleccionTarjetas();
+    cambiarAlerta("Juga YA!");
 }
 
 function evaluarSeleccion() {
@@ -20,15 +21,16 @@ function evaluarSeleccion() {
         if(obtenerValorTarjeta(tarjetasEnEspera[0]) === obtenerValorTarjeta(tarjetasEnEspera[1])) {
             cantidadParejas--;
             evaluarJuego();
-            console.log("Son iguales!");
+            setTimeout(cambiarAlerta, 500, "Muy bien!");
         }else {
-            console.log("Ups, te equivocaste!");
+            setTimeout(cambiarAlerta, 500, "Ups!");
             setTimeout(function() {
                 voltearAbajo($tarjeta1);
                 voltearAbajo($tarjeta2);
             }, 1000);
 
         }
+        setTimeout(cambiarAlerta, 1000, "Juga YA!");
         setTimeout(habilitarSeleccionTarjetas, 1000);
         tarjetasEnEspera = [];
     }
@@ -78,4 +80,8 @@ function mezclarArray(array){
 
 function obtenerValorTarjeta($tarjeta) {
     return $tarjeta.querySelector("p").textContent;
+}
+
+function cambiarAlerta(mensaje) {
+    document.querySelector("#alerta-estado").textContent = mensaje;
 }
