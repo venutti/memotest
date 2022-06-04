@@ -1,0 +1,4 @@
+.tarjeta {
+    background-color: green;
+    transition: background-color 500;
+}
