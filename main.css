@@ -1,4 +1,6 @@
 .tarjeta {
     background-color: green;
     transition: background-color 0.5s;
+    display: grid;
+    place-items: center;
 }

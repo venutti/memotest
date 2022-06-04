@@ -42,36 +42,40 @@ function evaluarJuego() {
     }
 }
 
+function manejarSeleccionTarjeta($tarjeta) {
+    if(!$tarjeta.classList.contains("seleccionado")) {
+        $tarjeta.classList.add("seleccionado");
+        voltearArriba($tarjeta);
+        tarjetasEnEspera.push($tarjeta);
+        evaluarSeleccion();
+    }
+}
+
+
+
 function habilitarSeleccionTarjetas() {
-    document.querySelectorAll("#tablero .tarjeta").forEach(function($tarjeta) {
-        $tarjeta.onclick = function() {
-            if(!$tarjeta.classList.contains("seleccionado")) {
-                $tarjeta.classList.add("seleccionado");
-                voltearArriba($tarjeta);
-                tarjetasEnEspera.push($tarjeta);
-                evaluarSeleccion();
-            }
-        };
-    });
+    $tablero.onclick = function(e) {
+        const $elemento = e.target;
+        if($elemento.classList.contains("tarjeta")) {
+            manejarSeleccionTarjeta($elemento);
+        }
+    }
 }
 
 function deshabilitarSeleccionTarjetas() {
-    document.querySelectorAll("#tablero .tarjeta").forEach(function($tarjeta) {
-        $tarjeta.onclick = function() {
-
-        }
-    });
+    $tablero.onclick = function(e) {
+    }
 }
 
 function voltearArriba($tarjeta) {
     $tarjeta.classList.add("bg-primary");
-    $tarjeta.querySelector("p").textContent = distribucion[Number($tarjeta.id)];
+    $tarjeta.textContent = distribucion[Number($tarjeta.id)];
 }
 
 function voltearAbajo($tarjeta) {
     $tarjeta.classList.remove("bg-primary");
     $tarjeta.classList.remove("seleccionado");
-    $tarjeta.querySelector("p").textContent = "?";
+    $tarjeta.textContent = "?";
 }
 
 function mezclarArray(array){
@@ -81,7 +85,7 @@ function mezclarArray(array){
 }
 
 function obtenerValorTarjeta($tarjeta) {
-    return $tarjeta.querySelector("p").textContent;
+    return $tarjeta.textContent;
 }
 
 function cambiarAlerta(mensaje) {
