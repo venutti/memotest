@@ -64,11 +64,11 @@ function deshabilitarSeleccionTarjetas() {
 }
 
 function voltearArriba($tarjeta) {
-    $tarjeta.classList.remove("seleccionado");
     $tarjeta.querySelector("p").textContent = distribucion[Number($tarjeta.id)];
 }
 
 function voltearAbajo($tarjeta) {
+    $tarjeta.classList.remove("seleccionado");
     $tarjeta.querySelector("p").textContent = "?";
 }
 
