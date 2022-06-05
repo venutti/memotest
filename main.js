@@ -1,15 +1,61 @@
+const $pantallaInicio = document.querySelector("#pantalla-inicio");
+const $pantallaJuego = document.querySelector("#pantalla-juego");
+const $botonComenzar = $pantallaInicio.querySelector("button");
+const $tablero = document.querySelector("#tablero");
+const $divAlerta = document.querySelector("#alertaEstado");
+
+let cantTurnos = 0;
 let cantidadParejas = 6;
-let $tablero = document.querySelector("#tablero");
 let distribucion = [0,0,1,1,2,2,3,3,4,4,5,5];
 let tarjetasEnEspera = [];
 
-mezclarArray(distribucion);
-
-comenzarJuego();
+$botonComenzar.onclick = comenzarJuego;
 
 function comenzarJuego() {
+    reiniciarJuego();
+    mezclarArray(distribucion);
+    cambiarInterfaz();
     habilitarSeleccionTarjetas();
     cambiarAlerta("Juga YA!");
+}
+
+function cambiarInterfaz() {
+    if($pantallaInicio.classList.contains("oculto")) {
+        $pantallaInicio.classList.remove("oculto");
+        $pantallaJuego.classList.add("oculto");
+    }else{
+        $pantallaInicio.classList.add("oculto");
+        $pantallaJuego.classList.remove("oculto");
+    }
+}
+
+function habilitarSeleccionTarjetas() {
+    $tablero.onclick = function(e) {
+        const $elemento = e.target;
+        if($elemento.classList.contains("tarjeta")) {
+            manejarSeleccionTarjeta($elemento);
+        }
+    }
+}
+
+function deshabilitarSeleccionTarjetas() {
+    $tablero.onclick = function(e) {
+    }
+}
+
+function manejarSeleccionTarjeta($tarjeta) {
+    if(!$tarjeta.classList.contains("encontrada")) {
+        if(!$tarjeta.classList.contains("volteada")) {
+            $tarjeta.classList.add("volteada");
+            voltearArriba($tarjeta);
+            tarjetasEnEspera.push($tarjeta);
+            evaluarSeleccion();
+        } else {
+            voltearAbajo($tarjeta);
+            tarjetasEnEspera.pop();
+            cantTurnos++;
+        }
+    }
 }
 
 function evaluarSeleccion() {
@@ -31,46 +77,29 @@ function evaluarSeleccion() {
                 voltearAbajo($tarjeta1);
                 voltearAbajo($tarjeta2);
             }, 1000);
-
         }
         setTimeout(cambiarAlerta, 1000, "Juga YA!");
         setTimeout(habilitarSeleccionTarjetas, 1000);
         tarjetasEnEspera = [];
+        cantTurnos++;
     }
 }
 
 function evaluarJuego() {
     if(cantidadParejas === 0) {
-        document.querySelector("#alerta-estado").textContent = "Ganaste!";
+        document.querySelector("#pantalla-inicio .alert").textContent = `Ganaste! Y tardaste ${cantTurnos} en completarlo. Presiona JUGAR para volver a intentarlo`;
+        cambiarInterfaz();
     }
 }
 
-function manejarSeleccionTarjeta($tarjeta) {
-    if(!$tarjeta.classList.contains("encontrada")) {
-        if(!$tarjeta.classList.contains("volteada")) {
-            $tarjeta.classList.add("volteada");
-            voltearArriba($tarjeta);
-            tarjetasEnEspera.push($tarjeta);
-            evaluarSeleccion();
-        } else {
-            voltearAbajo($tarjeta);
-            tarjetasEnEspera.pop();
-        }
-    }
-}
-
-function habilitarSeleccionTarjetas() {
-    $tablero.onclick = function(e) {
-        const $elemento = e.target;
-        if($elemento.classList.contains("tarjeta")) {
-            manejarSeleccionTarjeta($elemento);
-        }
-    }
-}
-
-function deshabilitarSeleccionTarjetas() {
-    $tablero.onclick = function(e) {
-    }
+function reiniciarJuego() {
+    $tablero.querySelectorAll(".tarjeta").forEach(($tarjeta) => {
+        $tarjeta.classList.remove("encontrada");
+        voltearAbajo($tarjeta);
+    })
+    cantTurnos = 0;
+    cantidadParejas = 6;
+    tarjetasEnEspera = [];
 }
 
 function voltearArriba($tarjeta) {

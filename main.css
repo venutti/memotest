@@ -4,3 +4,24 @@
     display: grid;
     place-items: center;
 }
+
+.oculto{
+    display: none !important;
+}
+
+#pantalla-inicio{
+    display: grid;
+    place-items: center;
+}
+
+#pantalla-juego{
+    padding: 10px;
+    display: grid;
+    grid-template-rows: 7fr 1fr;
+    row-gap: 1em;
+}
+
+#pantalla-inicio button {
+    display: block;
+    margin: 0 auto;
+}
