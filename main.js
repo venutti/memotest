@@ -13,6 +13,7 @@ function comenzarJuego() {
 }
 
 function evaluarSeleccion() {
+    //pre: hay dos tarjetas DISTINTAS en espera
     if(tarjetasEnEspera.length === 2) {
         $tarjeta1 = tarjetasEnEspera[0];
         $tarjeta2 = tarjetasEnEspera[1];
@@ -20,6 +21,8 @@ function evaluarSeleccion() {
         deshabilitarSeleccionTarjetas();
         if(obtenerValorTarjeta(tarjetasEnEspera[0]) === obtenerValorTarjeta(tarjetasEnEspera[1])) {
             cantidadParejas--;
+            $tarjeta1.classList.add("encontrada");
+            $tarjeta2.classList.add("encontrada");
             evaluarJuego();
             setTimeout(cambiarAlerta, 500, "Muy bien!");
         }else {
@@ -43,15 +46,18 @@ function evaluarJuego() {
 }
 
 function manejarSeleccionTarjeta($tarjeta) {
-    if(!$tarjeta.classList.contains("seleccionado")) {
-        $tarjeta.classList.add("seleccionado");
-        voltearArriba($tarjeta);
-        tarjetasEnEspera.push($tarjeta);
-        evaluarSeleccion();
+    if(!$tarjeta.classList.contains("encontrada")) {
+        if(!$tarjeta.classList.contains("volteada")) {
+            $tarjeta.classList.add("volteada");
+            voltearArriba($tarjeta);
+            tarjetasEnEspera.push($tarjeta);
+            evaluarSeleccion();
+        } else {
+            voltearAbajo($tarjeta);
+            tarjetasEnEspera.pop();
+        }
     }
 }
-
-
 
 function habilitarSeleccionTarjetas() {
     $tablero.onclick = function(e) {
@@ -74,7 +80,7 @@ function voltearArriba($tarjeta) {
 
 function voltearAbajo($tarjeta) {
     $tarjeta.classList.remove("bg-primary");
-    $tarjeta.classList.remove("seleccionado");
+    $tarjeta.classList.remove("volteada");
     $tarjeta.textContent = "?";
 }
 
