@@ -61,6 +61,7 @@ function manejarSeleccionTarjeta($tarjeta) {
 function evaluarSeleccion() {
     //pre: hay dos tarjetas DISTINTAS en espera
     if(tarjetasEnEspera.length === 2) {
+        cantTurnos++;
         $tarjeta1 = tarjetasEnEspera[0];
         $tarjeta2 = tarjetasEnEspera[1];
 
@@ -81,7 +82,6 @@ function evaluarSeleccion() {
         setTimeout(cambiarAlerta, 1000, "Juga YA!");
         setTimeout(habilitarSeleccionTarjetas, 1000);
         tarjetasEnEspera = [];
-        cantTurnos++;
     }
 }
 
