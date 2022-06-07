@@ -4,7 +4,8 @@
   "description": "Juego de memotest para rArgentinaPrograma",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:open": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,8 @@
   "homepage": "https://github.com/venutti/memotest#readme",
   "dependencies": {
     "bootstrap": "^5.1.3"
+  },
+  "devDependencies": {
+    "cypress": "^10.0.2"
   }
 }
